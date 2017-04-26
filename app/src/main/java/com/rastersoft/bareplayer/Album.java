@@ -57,7 +57,7 @@ class Album {
         } else {
             Collections.sort(this.songs, new Comparator<Song>() {
                 @Override
-                public int compare(Song song2, Song song1) {
+                public int compare(Song song1, Song song2) {
                     return song1.name.compareTo(song2.name);
                 }
             });
