@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BarePlayer</string>
+    <string name="play_random_songs">Reproducir canciones aleatorias</string>
+    <string name="play_random_albumes">Reproducir álbumes aleatorios</string>
+    <!-- Jumps to the previous song -->
+    <string name="previous_song">Anterior</string>
+    <!-- Jumps to the next song -->
+    <string name="next_song">Siguiente</string>
+    <!-- Pauses a song -->
+    <string name="pause_song">Pausa</string>
+    <!-- Continues playing a song after being paused -->
+    <string name="play_song">Play</string>
+    <!-- Jumps to the previous album -->
+    <string name="previous_album">Álbum anterior</string>
+    <!-- Jumps to the next album -->
+    <string name="next_album">Álbum siguiente</string>
+</resources>
