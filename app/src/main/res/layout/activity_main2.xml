@@ -45,12 +45,12 @@
             android:layout_weight="0.09">
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/buttonPrev"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.90"
                 android:drawableTop="@drawable/ic_action_prev"
-                android:onClick="onPrevClicked"
+                android:onClick="onPrevSongClicked"
                 android:text="Previous" />
 
             <Button
@@ -63,12 +63,12 @@
                 android:text="Play" />
 
             <Button
-                android:id="@+id/button8"
+                android:id="@+id/buttonNext"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_action_next"
-                android:onClick="onNextClicked"
+                android:onClick="onNextSongClicked"
                 android:text="Next" />
         </LinearLayout>
 

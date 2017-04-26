@@ -43,6 +43,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         super.onDestroy();
         if (this.player != null) {
             this.player.stop();
+            this.player = null;
         }
     }
 
@@ -72,11 +73,11 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.setButtonStatus();
     }
 
-    public void onPrevClicked(View view) {
+    public void onPrevSongClicked(View view) {
         this.prevSong();
     }
 
-    public void onNextClicked(View view) {
+    public void onNextSongClicked(View view) {
         this.nextSong();
     }
 
@@ -84,7 +85,6 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
         boolean doneLoop = false;
         while(true) {
-            Log.v("Sonido","Next song");
             if (this.currentAlbum < 0) {
                 this.currentAlbum = 0;
                 this.currentSong = 0;
@@ -155,14 +155,15 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         if (this.player != null) {
             this.player.stop();
         }
+
         this.player = new MediaPlayer();
         this.player.setScreenOnWhilePlaying(true);
         this.player.setOnCompletionListener(this);
+        this.player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         Log.v("Playing",path);
         Uri uri = Uri.parse("file://"+path);
 
-        this.player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             player.setDataSource(getApplicationContext(),uri);
             player.prepare();
@@ -170,7 +171,6 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
             Log.v("Sonido2: ",e.getMessage());
             return false;
         }
-        player.start();
         player.setLooping(false); // Set looping
         player.setVolume(100,100);
         player.start();
