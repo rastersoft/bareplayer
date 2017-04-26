@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -83,6 +84,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
         boolean doneLoop = false;
         while(true) {
+            Log.v("Sonido","Next song");
             if (this.currentAlbum < 0) {
                 this.currentAlbum = 0;
                 this.currentSong = 0;
@@ -143,8 +145,10 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     public boolean playSong(Song song) {
 
-        EditText text = (EditText) findViewById(R.id.currentSong);
-        text.setText("%s\n\n%s".format(song.album,song.name));
+        TextView text = (TextView) findViewById(R.id.albumName);
+        text.setText(song.album);
+        text = (TextView) findViewById(R.id.songTitle);
+        text.setText(song.name);
 
         String path = song.path;
         this.albumManager.listAlbumes();
@@ -155,11 +159,10 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.player.setScreenOnWhilePlaying(true);
         this.player.setOnCompletionListener(this);
 
-        Log.v("Playing: ",path);
+        Log.v("Playing",path);
         Uri uri = Uri.parse("file://"+path);
 
         this.player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
         try {
             player.setDataSource(getApplicationContext(),uri);
             player.prepare();
@@ -170,6 +173,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         player.start();
         player.setLooping(false); // Set looping
         player.setVolume(100,100);
+        player.start();
         this.setButtonStatus();
         return true;
     }
