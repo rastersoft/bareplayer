@@ -16,37 +16,52 @@ class AlbumManager {
     public static final int MODE_RANDOM_ALBUM = 2;
 
     private ArrayList<Album> albumes;
-
+    private ArrayList<Song> songs;
+    private Album randomSongsAlbum;
+    private int currentMode;
     private int currentAlbum;
 
-    public AlbumManager() {
+    public AlbumManager(int mode) {
         this.albumes = new ArrayList<Album>();
+        this.songs = new ArrayList<Song>();
+        this.randomSongsAlbum = null;
         this.currentAlbum = -1;
+        this.currentMode = mode;
     }
 
     public Album nextAlbum() {
-        this.currentAlbum++;
-        if (this.currentAlbum >= this.albumes.size()) {
-            this.currentAlbum = 0;
+        if (this.currentMode == MODE_RANDOM_SONG) {
+            this.randomSongsAlbum.resetSong(true);
+            return this.randomSongsAlbum;
+        } else {
+            this.currentAlbum++;
+            if (this.currentAlbum >= this.albumes.size()) {
+                this.currentAlbum = 0;
+            }
+            Album album = this.albumes.get(this.currentAlbum);
+            album.resetSong(true);
+            return album;
         }
-        Album album = this.albumes.get(this.currentAlbum);
-        album.resetSong(true);
-        return album;
     }
 
     public Album prevAlbum() {
-        this.currentAlbum--;
-        if (this.currentAlbum < 0) {
-            this.currentAlbum =  this.albumes.size() - 1;
+        if (this.currentMode == MODE_RANDOM_SONG) {
+            this.randomSongsAlbum.resetSong(false);
+            return this.randomSongsAlbum;
+        } else {
+            this.currentAlbum--;
+            if (this.currentAlbum < 0) {
+                this.currentAlbum = this.albumes.size() - 1;
+            }
+            Album album = this.albumes.get(this.currentAlbum);
+            album.resetSong(false);
+            return album;
         }
-        Album album = this.albumes.get(this.currentAlbum);
-        album.resetSong(false);
-        return album;
     }
 
     public void refreshSongSublist(String base_folder) {
 
-        Album album = new Album(base_folder);
+        Album album = new Album(base_folder,this.songs);
         if (0 != album.getNSongs()) {
             this.albumes.add(album);
         }
@@ -61,20 +76,25 @@ class AlbumManager {
     }
 
 
-    public void sortAlbumes(int mode) {
+    public void sortAlbumes() {
 
-        ArrayList<Album> newAlbumes = new ArrayList<Album>();
-        int nAlbumes = this.albumes.size();
-        while (nAlbumes > 0) {
-            int position = (int) (Math.random() * ((double) nAlbumes));
-            Album album = this.albumes.get(position);
-            album.sortSongs(mode);
-            newAlbumes.add(album);
-            this.albumes.remove(position);
-            nAlbumes--;
+        if (this.currentMode == MODE_RANDOM_ALBUM) {
+            // Random sort for album play
+            ArrayList<Album> newAlbumes = new ArrayList<Album>();
+            int nAlbumes = this.albumes.size();
+            while (nAlbumes > 0) {
+                int position = (int) (Math.random() * ((double) nAlbumes));
+                Album album = this.albumes.get(position);
+                album.sortSongs();
+                newAlbumes.add(album);
+                this.albumes.remove(position);
+                nAlbumes--;
+            }
+            this.albumes = newAlbumes;
+        } else {
+            this.randomSongsAlbum = new Album(null,this.songs);
+            this.randomSongsAlbum.sortSongs();
         }
-        this.albumes = newAlbumes;
-        return;
     }
 
     public Album getAlbum(int album) {

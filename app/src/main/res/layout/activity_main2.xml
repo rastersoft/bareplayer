@@ -51,7 +51,7 @@
                 android:layout_weight="0.90"
                 android:drawableTop="@drawable/ic_action_prev"
                 android:onClick="onPrevSongClicked"
-                android:text="Previous" />
+                android:text="@string/previous_song" />
 
             <Button
                 android:id="@+id/buttonPlay"
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_action_play"
                 android:onClick="onPlayClicked"
-                android:text="Play" />
+                android:text="@string/play_song" />
 
             <Button
                 android:id="@+id/buttonNext"
@@ -69,22 +69,26 @@
                 android:layout_weight="1"
                 android:drawableTop="@drawable/ic_action_next"
                 android:onClick="onNextSongClicked"
-                android:text="Next" />
+                android:text="@string/next_song" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/buttonNextAlbum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.18"
-            android:text="Next album" />
+            android:drawableRight="@drawable/ic_action_next_album"
+            android:onClick="onNextAlbumClicked"
+            android:text="@string/next_album" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/buttonPrevAlbum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.22"
-            android:text="Previous album" />
+            android:drawableLeft="@drawable/ic_action_prev_album"
+            android:onClick="onPreviousAlbumClicked"
+            android:text="@string/previous_album" />
 
     </LinearLayout>
 

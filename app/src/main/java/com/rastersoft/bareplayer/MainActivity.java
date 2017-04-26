@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     };
     int current_mode;
 
-    private AlbumManager albumManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         this.current_song = 0;
 
         this.current_mode = AlbumManager.MODE_RANDOM_NONE;
-        this.albumManager = new AlbumManager();
     }
 
 
@@ -57,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, Main2Activity.class);
         myIntent.putExtra("launch_mode", 1); //Optional parameters
         this.startActivity(myIntent);
-
-
-
-/*        Intent serviceIntent = new Intent(this,BgSoundService.class);
-        serviceIntent.setAction(Environment.DIRECTORY_MUSIC+"/flojosdepantalon.mp3");
-        startService(serviceIntent);*/
     }
 
     public void randomAlbumClicked(View view) {

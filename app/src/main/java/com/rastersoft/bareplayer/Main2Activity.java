@@ -28,10 +28,17 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         setContentView(R.layout.activity_main2);
         Intent intent = getIntent();
         this.mode = intent.getIntExtra("launch_mode",0); //if it's a string you stored.
+        if (this.mode == AlbumManager.MODE_RANDOM_SONG) {
+            Button btn;
+            btn = (Button) findViewById(R.id.buttonNextAlbum);
+            btn.setVisibility(View.GONE);
+            btn = (Button) findViewById(R.id.buttonPrevAlbum);
+            btn.setVisibility(View.GONE);
+        }
         this.player = null;
-        this.albumManager = new AlbumManager();
+        this.albumManager = new AlbumManager(this.mode);
         this.albumManager.refreshSongSublist("/sdcard/Music");
-        this.albumManager.sortAlbumes(this.mode);
+        this.albumManager.sortAlbumes();
         this.currentAlbum = null;
         this.nextSong();
     }
@@ -78,6 +85,22 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     public void onNextSongClicked(View view) {
         this.nextSong();
+    }
+
+    public void onNextAlbumClicked(View view) {
+        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
+            this.currentAlbum = this.albumManager.nextAlbum();
+            this.currentAlbum.resetSong(true);
+            this.nextSong();
+        }
+    }
+
+    public void onPreviousAlbumClicked(View view) {
+        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
+            this.currentAlbum = this.albumManager.prevAlbum();
+            this.currentAlbum.resetSong(true);
+            this.nextSong();
+        }
     }
 
     public void nextSong() {

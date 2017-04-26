@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.12"
             android:onClick="randomSongClicked"
-            android:text="Play random songs" />
+            android:text="@string/play_random_songs" />
 
         <Button
             android:id="@+id/random_album"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.13"
             android:onClick="randomAlbumClicked"
-            android:text="Play random albumes" />
+            android:text="@string/play_random_albumes" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

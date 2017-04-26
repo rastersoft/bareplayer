@@ -18,29 +18,35 @@ class Album {
     private boolean alwaysRandom;
     private int currentSong;
 
-    public Album(String path) {
+    public Album(String path,ArrayList<Song> plainSongs) {
 
         this.songs = new ArrayList<Song>();
         this.path = path;
         this.alwaysRandom = false;
-        int counter = 0;
 
-        File directory = new File(path);
-        File[] files = directory.listFiles();
-        for(File file:files) {
-            if (file.isDirectory()) {
-                continue;
+        if (path != null) {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                String filename = file.getName();
+                if ((filename == "random") || (filename == "random.txt")) {
+                    this.alwaysRandom = true;
+                    continue;
+                }
+                Song song = new Song(filename, path);
+                this.songs.add(song);
+                plainSongs.add(song);
             }
-            String filename = file.getName();
-            if ((filename == "random") || (filename == "random.txt")) {
-                this.alwaysRandom = true;
-                continue;
+            this.currentSong = -1;
+        } else {
+            this.alwaysRandom = true;
+            for(Song song:plainSongs) {
+                this.songs.add(song);
             }
-            Song song = new Song(filename,path);
-            this.songs.add(song);
-            counter++;
         }
-        this.currentSong = -1;
     }
 
     public void resetSong(boolean toFirst) {
@@ -67,9 +73,9 @@ class Album {
         return this.songs.get(this.currentSong);
     }
 
-    public void sortSongs(int mode) {
+    public void sortSongs() {
 
-        if ((mode == AlbumManager.MODE_RANDOM_SONG) || (this.alwaysRandom)) {
+        if (this.alwaysRandom) {
             ArrayList<Song> newSongs = new ArrayList<Song>();
             int nSongs = this.songs.size();
             while (nSongs > 0) {
