@@ -20,8 +20,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     private AlbumManager albumManager;
     private int mode;
 
-    private int currentAlbum;
-    private int currentSong;
+    private Album currentAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +32,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.albumManager = new AlbumManager();
         this.albumManager.refreshSongSublist("/sdcard/Music");
         this.albumManager.sortAlbumes(this.mode);
-        this.currentAlbum = -1;
-        this.currentSong = 0;
+        this.currentAlbum = null;
         this.nextSong();
     }
 
@@ -43,6 +41,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         super.onDestroy();
         if (this.player != null) {
             this.player.stop();
+            this.player.release();
             this.player = null;
         }
     }
@@ -83,27 +82,13 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     public void nextSong() {
 
-        boolean doneLoop = false;
         while(true) {
-            if (this.currentAlbum < 0) {
-                this.currentAlbum = 0;
-                this.currentSong = 0;
-            } else {
-                this.currentSong++; // next song
+            if (this.currentAlbum == null) {
+                this.currentAlbum = this.albumManager.nextAlbum();
             }
-            Album album = this.albumManager.getAlbum(this.currentAlbum);
-            if (album == null) {
-                if (doneLoop) {
-                    return;
-                }
-                doneLoop = true; // to avoid failure if there are no songs
-                this.currentAlbum = -1;
-                continue;
-            }
-            Song song = album.get_song(this.currentSong);
+            Song song = this.currentAlbum.nextSong();
             if (song == null) {
-                this.currentAlbum++;
-                this.currentSong = -1;
+                this.currentAlbum = this.albumManager.nextAlbum();
                 continue;
             }
             if (this.playSong(song)) {
@@ -113,28 +98,13 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     }
 
     public void prevSong() {
-
-        boolean doneLoop = false;
         while(true) {
-            if (this.currentAlbum < 0) {
-                this.currentAlbum = this.albumManager.getNAlbumes() - 1;
-                this.currentSong = this.albumManager.getAlbum(this.currentAlbum).getNSongs() - 1;
-            } else {
-                this.currentSong--; // previous song
+            if (this.currentAlbum == null) {
+                this.currentAlbum = this.albumManager.prevAlbum();
             }
-            Album album = this.albumManager.getAlbum(this.currentAlbum);
-            if (album == null) {
-                if (doneLoop) {
-                    return;
-                }
-                doneLoop = true; // to avoid failure if there are no songs
-                this.currentAlbum = -1;
-                continue;
-            }
-            Song song = album.get_song(this.currentSong);
+            Song song = this.currentAlbum.prevSong();
             if (song == null) {
-                this.currentAlbum--;
-                this.currentSong = -1;
+                this.currentAlbum = this.albumManager.prevAlbum();
                 continue;
             }
             if (this.playSong(song)) {
@@ -154,6 +124,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.albumManager.listAlbumes();
         if (this.player != null) {
             this.player.stop();
+            this.player.release();
         }
 
         this.player = new MediaPlayer();
@@ -181,6 +152,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     public void onCompletion(MediaPlayer mp) {
         Log.v("Musica","Completado");
         this.player.stop();
+        this.player.release();
         this.player = null;
         this.nextSong();
     }

@@ -16,6 +16,7 @@ class Album {
     public String path;
     private ArrayList<Song> songs;
     private boolean alwaysRandom;
+    private int currentSong;
 
     public Album(String path) {
 
@@ -39,6 +40,31 @@ class Album {
             this.songs.add(song);
             counter++;
         }
+        this.currentSong = -1;
+    }
+
+    public void resetSong(boolean toFirst) {
+        if (toFirst) {
+            this.currentSong = -1;
+        } else {
+            this.currentSong = this.songs.size();
+        }
+    }
+
+    public Song nextSong() {
+        this.currentSong++;
+        if (this.currentSong >= this.songs.size()) {
+            return null;
+        }
+        return this.songs.get(this.currentSong);
+    }
+
+    public Song prevSong() {
+        this.currentSong--;
+        if (this.currentSong < 0) {
+            return null;
+        }
+        return this.songs.get(this.currentSong);
     }
 
     public void sortSongs(int mode) {

@@ -17,8 +17,31 @@ class AlbumManager {
 
     private ArrayList<Album> albumes;
 
+    private int currentAlbum;
+
     public AlbumManager() {
         this.albumes = new ArrayList<Album>();
+        this.currentAlbum = -1;
+    }
+
+    public Album nextAlbum() {
+        this.currentAlbum++;
+        if (this.currentAlbum >= this.albumes.size()) {
+            this.currentAlbum = 0;
+        }
+        Album album = this.albumes.get(this.currentAlbum);
+        album.resetSong(true);
+        return album;
+    }
+
+    public Album prevAlbum() {
+        this.currentAlbum--;
+        if (this.currentAlbum < 0) {
+            this.currentAlbum =  this.albumes.size() - 1;
+        }
+        Album album = this.albumes.get(this.currentAlbum);
+        album.resetSong(false);
+        return album;
     }
 
     public void refreshSongSublist(String base_folder) {
