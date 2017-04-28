@@ -38,57 +38,67 @@
             android:ems="10"
             android:inputType="none" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:orientation="horizontal"
-            android:layout_weight="0.09">
-
-            <Button
-                android:id="@+id/buttonPrev"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.90"
-                android:drawableTop="@drawable/ic_action_prev"
-                android:onClick="onPrevSongClicked"
-                android:text="@string/previous_song" />
-
-            <Button
-                android:id="@+id/buttonPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_action_play"
-                android:onClick="onPlayClicked"
-                android:text="@string/play_song" />
-
-            <Button
-                android:id="@+id/buttonNext"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_action_next"
-                android:onClick="onNextSongClicked"
-                android:text="@string/next_song" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonNextAlbum"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.18"
-            android:drawableRight="@drawable/ic_action_next_album"
-            android:onClick="onNextAlbumClicked"
-            android:text="@string/next_album" />
+            android:stretchColumns="*">
 
-        <Button
-            android:id="@+id/buttonPrevAlbum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.22"
-            android:drawableLeft="@drawable/ic_action_prev_album"
-            android:onClick="onPreviousAlbumClicked"
-            android:text="@string/previous_album" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buttonStop"
+                    android:layout_width="0dp"
+                    android:drawableTop="@drawable/ic_action_stop"
+                    android:onClick="onStopClicked"
+                    android:text="@string/stop_songs" />
+
+                <Button
+                    android:id="@+id/buttonPlay"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_action_play"
+                    android:onClick="onPlayClicked"
+                    android:text="@string/play_song" />
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buttonPrev"
+                    android:layout_width="0dp"
+                    android:drawableTop="@drawable/ic_action_prev"
+                    android:onClick="onPrevSongClicked"
+                    android:text="@string/previous_song" />
+
+                <Button
+                    android:id="@+id/buttonNext"
+                    android:layout_width="0dp"
+                    android:drawableTop="@drawable/ic_action_next"
+                    android:onClick="onNextSongClicked"
+                    android:text="@string/next_song" />
+            </TableRow>
+
+            <TableRow android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buttonPrevAlbum"
+                    android:layout_width="0dp"
+                    android:drawableTop="@drawable/ic_action_prev_album"
+                    android:onClick="onPreviousAlbumClicked"
+                    android:text="@string/previous_album" />
+
+                <Button
+                    android:id="@+id/buttonNextAlbum"
+                    android:layout_width="0dp"
+                    android:drawableTop="@drawable/ic_action_next_album"
+                    android:onClick="onNextAlbumClicked"
+                    android:text="@string/next_album" />
+
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 

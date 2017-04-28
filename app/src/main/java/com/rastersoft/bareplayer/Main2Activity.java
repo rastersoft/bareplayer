@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,7 +41,12 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         }
         this.player = null;
         this.albumManager = new AlbumManager(this.mode);
-        this.albumManager.refreshSongSublist("/sdcard/Music");
+
+        //this.albumManager.refreshSongSublist("/sdcard/Music");
+        String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+        Log.v("Path",fullPath);
+        Log.v("Path2",Environment.getExternalStorageDirectory().getAbsolutePath());
+        this.albumManager.refreshSongSublist(fullPath);
         this.albumManager.sortAlbumes();
         this.currentAlbum = null;
         Window w = this.getWindow();
@@ -50,12 +56,17 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (this.player != null) {
             this.player.stop();
             this.player.release();
             this.player = null;
         }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
     }
 
     private void setButtonStatus() {
@@ -69,6 +80,10 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
                 playpause.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play, 0, 0);
             }
         }
+    }
+
+    public void onStopClicked(View view) {
+        super.onBackPressed();
     }
 
     public void onPlayClicked(View view) {

@@ -3,15 +3,18 @@
     <string name="play_random_songs">Play random songs</string>
     <string name="play_random_albumes">Play random albumes</string>
     <!-- Jumps to the previous song -->
-    <string name="previous_song">Previous</string>
+    <string name="previous_song">Previous song</string>
     <!-- Jumps to the next song -->
-    <string name="next_song">Next</string>
+    <string name="next_song">Next song</string>
     <!-- Pauses a song -->
     <string name="pause_song">Pause</string>
     <!-- Continues playing a song after being paused -->
     <string name="play_song">Play</string>
+    <!-- Stops playing songs and returns to the main activity -->
+    <string name="stop_songs">Stop</string>
     <!-- Jumps to the previous album -->
     <string name="previous_album">Previous album</string>
     <!-- Jumps to the next album -->
     <string name="next_album">Next album</string>
+
 </resources>
