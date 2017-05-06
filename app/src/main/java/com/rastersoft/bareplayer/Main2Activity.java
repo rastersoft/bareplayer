@@ -1,14 +1,11 @@
 package com.rastersoft.bareplayer;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -18,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.app.Notification;
 
 import java.io.IOException;
 import java.lang.Runnable;
@@ -72,25 +68,6 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     public void onBackPressed() {
 
         this.moveTaskToBack(true);
-    }
-
-    @Override
-    public void onPause() {
-        /*this.notification = new NotificationCompat.Builder(this.getApplicationContext());
-        this.notification.setSmallIcon(R.drawable.ic_bareplayer_bw);
-        this.notification.setContentTitle("BarePlayer");
-        this.notification.setContentText(this.currentSong.name);*/
-        /*Intent resultIntent = new Intent(this, Main2Activity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(Main2Activity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        this.notification.setContentIntent(resultPendingIntent);*/
-        /*this.notification.setAutoCancel(true):
-        this.notification.addAction(this);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
-        mNotificationManager.notify(this.getTaskId(),this.notification.build());*/
-        super.onPause();
     }
 
     @Override
@@ -241,8 +218,8 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     private String mSeconds(int ms) {
         ms = ms/1000;
-        String date = String.format("%1$02d:%2$02d:%3$02d",(int)(ms/3600),(int)((ms/60)%60),(int)(ms%60));
-        return date;
+        String tdate = String.format("%1$02d:%2$02d:%3$02d",(int)(ms/3600),(int)((ms/60)%60),(int)(ms%60));
+        return tdate;
     }
 
     public void run() {

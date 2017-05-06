@@ -9,7 +9,7 @@ import java.util.Comparator;
  * Created by raster on 24/04/17.
  */
 
-class Album {
+class Album implements Comparator<Song> {
 
     public String path;
     private ArrayList<Song> songs;
@@ -110,13 +110,88 @@ class Album {
             }
             this.songs = newSongs;
         } else {
-            Collections.sort(this.songs, new Comparator<Song>() {
-                @Override
-                public int compare(Song song1, Song song2) {
-                    return song1.name.compareTo(song2.name);
-                }
-            });
+            Collections.sort(this.songs, this);
         }
+    }
+
+    private boolean isNumber(char c) {
+        if ((c < '0') || (c > '9')) {
+            return false;
+        }
+        return true;
+    }
+
+    public int compare(Song song1, Song song2) {
+        String name1 = song1.name;
+        String name2 = song2.name;
+
+        int nameSize = name1.length();
+        if (nameSize > name2.length()) {
+            nameSize = name2.length();
+        }
+
+        int i1 = 0;
+        int i2 = 0;
+        while(true) {
+            if ((i1 == name1.length()) || (i2 == name2.length())) {
+                break;
+            }
+            char n1 = name1.charAt(i1);
+            char n2 = name2.charAt(i2);
+            if (!this.isNumber(n1) || !this.isNumber(n2)) {
+                if (n1 < n2) {
+                    return -1;
+                }
+                if (n1 > n2) {
+                    return 1;
+                }
+                i1++;
+                i2++;
+                continue;
+            }
+            // both are numbers
+            int num1 = 0;
+            int num2 = 0;
+            while(i1 < name1.length()) {
+                int c;
+                c = (int)name1.charAt(i1);
+                if (c<0) {
+                    c += 256;
+                }
+                if ((c < '0') || (c > '9')) {
+                    break;
+                }
+                num1 *= 10;
+                num1 += c;
+                i1++;
+            }
+            while(i2 < name2.length()) {
+                int c;
+                c = (int)name2.charAt(i2);
+                if (c<0) {
+                    c += 256;
+                }
+                if ((c < '0') || (c > '9')) {
+                    break;
+                }
+                num2 *= 10;
+                num2 += c;
+                i2++;
+            }
+            if (num1 < num2) {
+                return -1;
+            }
+            if (num1 > num2) {
+                return 1;
+            }
+        }
+        if (i1 < i2) {
+            return -1;
+        }
+        if (i1 > i2) {
+            return 1;
+        }
+        return 0;
     }
 
     public Song get_song(int index) {
