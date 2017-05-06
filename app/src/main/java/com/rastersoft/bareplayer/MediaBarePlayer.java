@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -28,6 +29,10 @@ public class MediaBarePlayer extends IntentService implements MediaPlayer.OnComp
         super(name);
     }
 
+    public MediaBarePlayer() {
+        super("MediaBarePlayer");
+    }
+
     @Override
     public void onHandleIntent(Intent workIntent) {
         String dataString = workIntent.getDataString();
@@ -47,6 +52,16 @@ public class MediaBarePlayer extends IntentService implements MediaPlayer.OnComp
                 break;
             case "nextSong":
                 this.nextSong();
+                break;
+            case "prevSong":
+                this.prevSong();
+                break;
+            case "nextAlbum":
+                this.nextAlbum();
+                break;
+            case "prevAlbum":
+                this.previousAlbum();
+                break;
 
         }
     }
@@ -94,12 +109,26 @@ public class MediaBarePlayer extends IntentService implements MediaPlayer.OnComp
         }
     }
 
+    public void nextAlbum() {
+        this.currentAlbum = this.albumManager.nextAlbum();
+        this.currentAlbum.resetSong(true);
+        this.nextSong();
+    }
+
+    public void previousAlbum() {
+        this.currentAlbum = this.albumManager.prevAlbum();
+        this.currentAlbum.resetSong(true);
+        this.nextSong();
+    }
+
+
     public boolean playSong(Song song) {
 
-        TextView text = (TextView) findViewById(R.id.albumName);
+        /*TextView text = (TextView) findViewById(R.id.albumName);
         text.setText(song.album);
         text = (TextView) findViewById(R.id.songTitle);
         text.setText(song.name);
+        this.setButtonStatus();*/
 
         String path = song.path;
         this.albumManager.listAlbumes();
@@ -123,7 +152,6 @@ public class MediaBarePlayer extends IntentService implements MediaPlayer.OnComp
         player.setLooping(false); // Set looping
         player.setVolume(100,100);
         player.start();
-        this.setButtonStatus();
         return true;
     }
 
