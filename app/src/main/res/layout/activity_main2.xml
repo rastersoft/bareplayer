@@ -22,6 +22,7 @@
             android:cursorVisible="false"
             android:editable="false"
             android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
             android:inputType="none"
             android:selectAllOnFocus="false"
             android:singleLine="false"
@@ -36,7 +37,18 @@
             android:cursorVisible="false"
             android:editable="false"
             android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
             android:inputType="none" />
+
+        <EditText
+            android:id="@+id/Duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="textPersonName" />
 
         <TableLayout
             android:layout_width="match_parent"

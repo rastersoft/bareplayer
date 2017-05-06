@@ -26,9 +26,6 @@
             android:name=".Main2Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".Main3Activity"></activity>
-        <service
-            android:name=".MediaBarePlayer"
-            android:exported="false"/>
 
     </application>
 
