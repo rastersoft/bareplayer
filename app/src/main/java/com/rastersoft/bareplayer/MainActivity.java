@@ -2,36 +2,19 @@ package com.rastersoft.bareplayer;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
+import java.io.File;
 
-import static android.R.attr.value;
 
 public class MainActivity extends AppCompatActivity {
-
-    private String current_path;
-    private int current_song;
-
-    private MediaPlayer player;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -45,9 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.verifyStoragePermissions(this);
-        this.current_path = "";
-        this.current_song = 0;
-
+        String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+        File tmp = new File(fullPath);
+        try {
+            tmp.mkdir(); // Just to ensure that it has been made
+        } catch (Exception e) {
+        }
     }
 
 
@@ -61,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
     public void randomAlbumClicked(View view) {
         Intent myIntent = new Intent(this, Main2Activity.class);
         myIntent.putExtra("launch_mode", 2);
+        this.startActivity(myIntent);
+    }
+
+    public void onHelpClicked(View view) {
+        Intent myIntent = new Intent(this, Main3Activity.class);
         this.startActivity(myIntent);
     }
 

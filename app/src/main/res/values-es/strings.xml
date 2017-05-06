@@ -16,4 +16,17 @@
     <string name="previous_album">Álbum anterior</string>
     <!-- Jumps to the next album -->
     <string name="next_album">Álbum siguiente</string>
+    <!-- Help button -->
+    <string name="help">Ayuda</string>
+    <!-- Defines the music storage path -->
+    <string name="helpText">BarePlayer es un reproductor de música sencillo. Permite reproducir tu música aleatoriamente, o agrupada en álbumes.\n\n
+
+Un álbum está formado por ficheros de música que están en una misma carpeta. Así, es posible poner la música de cada álbum en una carpeta diferente y reproducir la música de su interior en orden, pero
+cada álbum se escogerá aleatoriamente. Los ficheros en una subcarpeta se consideran en un álbum diferente que los que están en la carpeta padre.\n\n
+
+Es posible añadir un fichero o carpeta vacíos llamados \"random\" o \"random.txt\" a una carpeta, en cuyo caso la música de dicho álbum se reproducirá en orden aleatorio al usar el modo \"álbumes aleatorios\". Esto es útil para carpetas de tipo "varios".\n\n
+
+También se puede añadir un fichero o carpeta vacíos llamados \"norandom\" o \"norandom.txt\", en cuyo caso la música de dicho álbum se reproducirá en orden al usar el modo \"canciones aleatorias\". Esto es útil para canciones que se deban reproducir juntas, como las de los álbumes de \"Tubular bells\".\n\n
+
+La música debe almacenarse en: %1$s (o en la carpeta \"%2$s\" en tu tarjeta SD)</string>
 </resources>

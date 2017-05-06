@@ -1,22 +1,22 @@
 package com.rastersoft.bareplayer;
 
+import android.app.IntentService;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
 
+/**
+ * Created by raster on 6/05/17.
+ */
 
-public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
+public class MediaBarePlayer extends IntentService implements MediaPlayer.OnCompletionListener {
 
     private MediaPlayer player;
     private AlbumManager albumManager;
@@ -24,80 +24,41 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     private Album currentAlbum;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+    public MediaBarePlayer(String name) {
+        super(name);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onHandleIntent(Intent workIntent) {
+        String dataString = workIntent.getDataString();
+
+        switch (workIntent.getStringExtra("command")) {
+            case "init":
+                this.mode = workIntent.getIntExtra("launch_mode", 0); //if it's a string you stored.
+
+                this.player = null;
+                this.albumManager = new AlbumManager(this.mode);
+
+                String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+                this.albumManager.refreshSongSublist(fullPath);
+                this.albumManager.sortAlbumes();
+                this.currentAlbum = null;
+                this.nextSong();
+                break;
+            case "nextSong":
+                this.nextSong();
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
         if (this.player != null) {
             this.player.stop();
             this.player.release();
             this.player = null;
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        this.moveTaskToBack(true);
-    }
-
-    private void setButtonStatus() {
-        if (this.player != null) {
-            Button playpause = (Button) findViewById(R.id.buttonPlay);
-            if (this.player.isPlaying()) {
-                playpause.setText(R.string.pause_song);
-                playpause.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_pause, 0, 0);
-            } else {
-                playpause.setText(R.string.play_song);
-                playpause.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play, 0, 0);
-            }
-        }
-    }
-
-    public void onStopClicked(View view) {
-        super.onBackPressed();
-    }
-
-    public void onPlayClicked(View view) {
-
-        if (this.player == null) {
-            return;
-        }
-        if (this.player.isPlaying()) {
-            this.player.pause();
-        } else {
-            this.player.start();
-        }
-        this.setButtonStatus();
-    }
-
-    public void onPrevSongClicked(View view) {
-        this.prevSong();
-    }
-
-    public void onNextSongClicked(View view) {
-        this.nextSong();
-    }
-
-    public void onNextAlbumClicked(View view) {
-        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
-            this.currentAlbum = this.albumManager.nextAlbum();
-            this.currentAlbum.resetSong(true);
-            this.nextSong();
-        }
-    }
-
-    public void onPreviousAlbumClicked(View view) {
-        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
-            this.currentAlbum = this.albumManager.prevAlbum();
-            this.currentAlbum.resetSong(true);
-            this.nextSong();
-        }
     }
 
     public void nextSong() {
@@ -172,4 +133,5 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.player = null;
         this.nextSong();
     }
+
 }

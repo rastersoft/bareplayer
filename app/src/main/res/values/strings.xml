@@ -16,5 +16,18 @@
     <string name="previous_album">Previous album</string>
     <!-- Jumps to the next album -->
     <string name="next_album">Next album</string>
+    <!-- Help button -->
+    <string name="help">Help</string>
+    <!-- Defines the music storage path -->
+    <string name="helpText">BarePlayer is a simple-to-use music player. It allows to play all your music randomly, or grouped in albumes.\n\n
+
+An album is made of all the music files that are in the same folder. Thus you can put each album in a separate folder and play the music in them in order, but each album be choosen randomly. Files in a subfolder are considered in a different album than in the parent folder.\n\n
+
+You can add an empty file/folder called \"random\" or \"random.txt\" to a folder, in which case the music in that album will be played in random order when playing in \"random albumes\" mode. This is useful for folders of the \"Awesome mix\" kind.\n\n
+
+You can also add an empty file/folder called \"norandom\" or \"norandom.txt\", in which case the music in that album will be played in order when playing in \"random songs\" mode. This is useful for songs that must be player always in order, like the \"Tubular bells\" albumes.\n\n
+
+Music must be stored at: %1$s (or in the folder \"%2$s\" in your external SD Card).</string>
+
 
 </resources>

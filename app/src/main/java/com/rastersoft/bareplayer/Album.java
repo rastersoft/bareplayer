@@ -1,7 +1,5 @@
 package com.rastersoft.bareplayer;
 
-import android.util.Log;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,37 +14,56 @@ class Album {
     public String path;
     private ArrayList<Song> songs;
     private boolean alwaysRandom;
+    private boolean neverRandom;
     private int currentSong;
 
-    public Album(String path,ArrayList<Song> plainSongs) {
+    public Album(String path,ArrayList<Album> plainSongs) {
+
+        Album tmpPlainSongs = null;
 
         this.songs = new ArrayList<Song>();
         this.path = path;
         this.alwaysRandom = false;
+        this.neverRandom = false;
 
-        if (path != null) {
+        if (plainSongs != null) {
             File directory = new File(path);
             File[] files = directory.listFiles();
+            for (File file : files) {
+                String filename = file.getName();
+                if ((filename.equals("random")) || (filename.equals("random.txt"))) {
+                    this.alwaysRandom = true;
+                    continue;
+                }
+                if ((filename.equals("norandom")) || (filename.equals("norandom.txt"))) {
+                    this.neverRandom = true;
+                    tmpPlainSongs = new Album(path, null);
+                    plainSongs.add(tmpPlainSongs);
+                    continue;
+                }
+            }
+
             for (File file : files) {
                 if (file.isDirectory()) {
                     continue;
                 }
                 String filename = file.getName();
-                if ((filename == "random") || (filename == "random.txt")) {
-                    this.alwaysRandom = true;
-                    continue;
-                }
                 Song song = new Song(filename, path);
                 this.songs.add(song);
-                plainSongs.add(song);
-            }
-            this.currentSong = -1;
-        } else {
-            this.alwaysRandom = true;
-            for(Song song:plainSongs) {
-                this.songs.add(song);
+                if (this.neverRandom) {
+                    tmpPlainSongs.add(song);
+                } else {
+                    tmpPlainSongs = new Album(path,null);
+                    tmpPlainSongs.add(song);
+                    plainSongs.add(tmpPlainSongs);
+                }
             }
         }
+        this.currentSong = -1;
+    }
+
+    public void add(Song song) {
+        this.songs.add(song);
     }
 
     public void resetSong(boolean toFirst) {
@@ -73,9 +90,15 @@ class Album {
         return this.songs.get(this.currentSong);
     }
 
-    public void sortSongs() {
+    public void sortSongs(int mode) {
 
-        if (this.alwaysRandom) {
+        boolean doRandom;
+        if (mode == AlbumManager.MODE_RANDOM_ALBUM) {
+            doRandom = this.alwaysRandom;
+        } else {
+            doRandom = this.neverRandom ? false : true;
+        }
+        if (doRandom) {
             ArrayList<Song> newSongs = new ArrayList<Song>();
             int nSongs = this.songs.size();
             while (nSongs > 0) {
