@@ -16,28 +16,19 @@ import android.widget.TextView;
 import java.io.IOException;
 
 
-public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
+public class Main2Activity extends AppCompatActivity {
 
-    private MediaPlayer player;
-    private AlbumManager albumManager;
     private int mode;
-
-    private Album currentAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (this.player != null) {
-            this.player.stop();
-            this.player.release();
-            this.player = null;
-        }
-        super.onDestroy();
+        Window w = this.getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Intent workIntent = getIntent();
+        this.mode = workIntent.getIntExtra("launch_mode", 0); //if it's a string you stored.
+        this.sendCommand("init");
     }
 
     @Override
@@ -47,7 +38,8 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     }
 
     private void setButtonStatus() {
-        if (this.player != null) {
+
+        /*if (this.player != null) {
             Button playpause = (Button) findViewById(R.id.buttonPlay);
             if (this.player.isPlaying()) {
                 playpause.setText(R.string.pause_song);
@@ -56,16 +48,17 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
                 playpause.setText(R.string.play_song);
                 playpause.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play, 0, 0);
             }
-        }
+        }*/
     }
 
     public void onStopClicked(View view) {
+
         super.onBackPressed();
     }
 
     public void onPlayClicked(View view) {
 
-        if (this.player == null) {
+        /*if (this.player == null) {
             return;
         }
         if (this.player.isPlaying()) {
@@ -73,103 +66,33 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         } else {
             this.player.start();
         }
-        this.setButtonStatus();
+        this.setButtonStatus();*/
+    }
+
+    private void sendCommand(String command) {
+        Intent callService = new Intent(this,MediaBarePlayer.class);
+        callService.putExtra("command",command);
+        if (command == "init") {
+            callService.putExtra("launch_mode",this.mode);
+        }
+        this.startService(callService);
     }
 
     public void onPrevSongClicked(View view) {
-        this.prevSong();
+        this.sendCommand("prevSong");
     }
 
     public void onNextSongClicked(View view) {
-        this.nextSong();
+
+        this.sendCommand("nextSong");
     }
 
     public void onNextAlbumClicked(View view) {
-        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
-            this.currentAlbum = this.albumManager.nextAlbum();
-            this.currentAlbum.resetSong(true);
-            this.nextSong();
-        }
+        this.sendCommand("nextAlbum");
     }
 
     public void onPreviousAlbumClicked(View view) {
-        if (this.mode == AlbumManager.MODE_RANDOM_ALBUM) {
-            this.currentAlbum = this.albumManager.prevAlbum();
-            this.currentAlbum.resetSong(true);
-            this.nextSong();
-        }
+        this.sendCommand("prevAlbum");
     }
 
-    public void nextSong() {
-
-        while(true) {
-            if (this.currentAlbum == null) {
-                this.currentAlbum = this.albumManager.nextAlbum();
-            }
-            Song song = this.currentAlbum.nextSong();
-            if (song == null) {
-                this.currentAlbum = this.albumManager.nextAlbum();
-                continue;
-            }
-            if (this.playSong(song)) {
-                return;
-            }
-        }
-    }
-
-    public void prevSong() {
-        while(true) {
-            if (this.currentAlbum == null) {
-                this.currentAlbum = this.albumManager.prevAlbum();
-            }
-            Song song = this.currentAlbum.prevSong();
-            if (song == null) {
-                this.currentAlbum = this.albumManager.prevAlbum();
-                continue;
-            }
-            if (this.playSong(song)) {
-                return;
-            }
-        }
-    }
-
-    public boolean playSong(Song song) {
-
-        TextView text = (TextView) findViewById(R.id.albumName);
-        text.setText(song.album);
-        text = (TextView) findViewById(R.id.songTitle);
-        text.setText(song.name);
-
-        String path = song.path;
-        this.albumManager.listAlbumes();
-        if (this.player != null) {
-            this.player.stop();
-            this.player.release();
-        }
-
-        this.player = new MediaPlayer();
-        this.player.setOnCompletionListener(this);
-        this.player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-        Uri uri = Uri.parse("file://"+path);
-
-        try {
-            player.setDataSource(getApplicationContext(),uri);
-            player.prepare();
-        } catch(IOException e) {
-            return false;
-        }
-        player.setLooping(false); // Set looping
-        player.setVolume(100,100);
-        player.start();
-        this.setButtonStatus();
-        return true;
-    }
-
-    public void onCompletion(MediaPlayer mp) {
-        this.player.stop();
-        this.player.release();
-        this.player = null;
-        this.nextSong();
-    }
 }
