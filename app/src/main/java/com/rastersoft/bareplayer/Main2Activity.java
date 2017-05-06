@@ -1,19 +1,24 @@
 package com.rastersoft.bareplayer;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.app.Notification;
 
 import java.io.IOException;
 import java.lang.Runnable;
@@ -26,6 +31,8 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     private Album currentAlbum;
     private int duration;
     private Handler mHandler;
+    private Song currentSong;
+    private NotificationCompat.Builder notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,8 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.duration = 0;
         this.mHandler = new Handler();
         this.run();
+        this.currentSong = null;
+        this.notification = null;
         this.nextSong();
     }
 
@@ -65,6 +74,31 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.moveTaskToBack(true);
     }
 
+    @Override
+    public void onPause() {
+        /*this.notification = new NotificationCompat.Builder(this.getApplicationContext());
+        this.notification.setSmallIcon(R.drawable.ic_bareplayer_bw);
+        this.notification.setContentTitle("BarePlayer");
+        this.notification.setContentText(this.currentSong.name);*/
+        /*Intent resultIntent = new Intent(this, Main2Activity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(Main2Activity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        this.notification.setContentIntent(resultPendingIntent);*/
+        /*this.notification.setAutoCancel(true):
+        this.notification.addAction(this);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
+        mNotificationManager.notify(this.getTaskId(),this.notification.build());*/
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.setSongData();
+    }
+
     private void setButtonStatus() {
 
         if (this.player != null) {
@@ -80,7 +114,9 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     }
 
     public void onStopClicked(View view) {
-
+        this.player.stop();
+        this.player.release();
+        this.player = null;
         super.onBackPressed();
     }
 
@@ -154,19 +190,26 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         }
     }
 
+    private void setSongData() {
+        if (this.currentSong != null) {
+            TextView text = (TextView) findViewById(R.id.albumName);
+            text.setText(this.currentSong.album);
+            text = (TextView) findViewById(R.id.songTitle);
+            text.setText(this.currentSong.name);
+        }
+    }
+
     public boolean playSong(Song song) {
 
-        TextView text = (TextView) findViewById(R.id.albumName);
-        text.setText(song.album);
-        text = (TextView) findViewById(R.id.songTitle);
-        text.setText(song.name);
-
+        this.currentSong = song;
+        this.setSongData();
 
         String path = song.path;
         this.albumManager.listAlbumes();
         if (this.player != null) {
             this.player.stop();
             this.player.release();
+            this.player = null;
         }
 
         this.player = new MediaPlayer();
