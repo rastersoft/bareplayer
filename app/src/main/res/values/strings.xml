@@ -29,5 +29,10 @@ You can also add an empty file/folder called \"norandom\" or \"norandom.txt\", i
 
 Music must be stored at: %1$s (or in the folder \"%2$s\" in your external SD Card).</string>
 
+    <!-- Help button -->
+    <string name="errorNoMusicTitle">No music found</string>
+
+    <!-- Defines the music storage path -->
+    <string name="errorNoMusic">No music found in the device. Please, add music files in the \"%1$s\" of your external SD Card (or in the \"%2$s\" folder).</string>
 
 </resources>

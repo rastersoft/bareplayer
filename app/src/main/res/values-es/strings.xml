@@ -29,4 +29,10 @@ Es posible añadir un fichero o carpeta vacíos llamados \"random\" o \"random.t
 También se puede añadir un fichero o carpeta vacíos llamados \"norandom\" o \"norandom.txt\", en cuyo caso la música de dicho álbum se reproducirá en orden al usar el modo \"canciones aleatorias\". Esto es útil para canciones que se deban reproducir juntas, como las de los álbumes de \"Tubular bells\".\n\n
 
 La música debe almacenarse en: %1$s (o en la carpeta \"%2$s\" en tu tarjeta SD)</string>
+
+    <!-- Help button -->
+    <string name="errorNoMusicTitle">No hay música</string>
+
+    <!-- Defines the music storage path -->
+    <string name="errorNoMusic">No se ha encontrado música en el dispositivo. Por favor, añade ficheros de música en la carpeta \"%1$s\" de tu tarjeta SD (o en la carpeta \"%2$s\" de tu móvil).</string>
 </resources>

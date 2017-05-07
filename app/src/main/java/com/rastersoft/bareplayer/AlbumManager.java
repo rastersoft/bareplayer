@@ -103,6 +103,14 @@ class AlbumManager {
         return this.albumes.size();
     }
 
+    public int getNSongs() {
+        int n = 0;
+        for (Album album : this.albumes) {
+            n += album.getNSongs();
+        }
+        return n;
+    }
+
     public void listAlbumes() {
 /*        for(Album album:this.albumes) {
             Log.v("Album",album.path);

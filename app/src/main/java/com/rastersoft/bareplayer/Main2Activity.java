@@ -1,11 +1,13 @@
 package com.rastersoft.bareplayer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -29,6 +31,8 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     private Handler mHandler;
     private Song currentSong;
     private NotificationCompat.Builder notification;
+    private AlertDialog dialogo;
+    boolean hadError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,35 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.run();
         this.currentSong = null;
         this.notification = null;
-        this.nextSong();
+        this.hadError = false;
+        if (0 == this.albumManager.getNSongs()) {
+            this.hadError = true;
+            Button b;
+            b = (Button) findViewById(R.id.buttonPlay);
+            b.setEnabled(false);
+            b = (Button) findViewById(R.id.buttonStop);
+            b.setEnabled(false);
+            b = (Button) findViewById(R.id.buttonNext);
+            b.setEnabled(false);
+            b = (Button) findViewById(R.id.buttonPrev);
+            b.setEnabled(false);
+            b = (Button) findViewById(R.id.buttonNextAlbum);
+            b.setEnabled(false);
+            b = (Button) findViewById(R.id.buttonPrevAlbum);
+            b.setEnabled(false);
+
+            AlertDialog.Builder mErr = new AlertDialog.Builder(this);
+            mErr.setMessage(String.format(this.getResources().getString(R.string.errorNoMusic),Environment.DIRECTORY_MUSIC,fullPath)).setTitle(R.string.errorNoMusicTitle);
+            mErr.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+            this.dialogo = mErr.create();
+            this.dialogo.show();
+        } else {
+            this.nextSong();
+        }
     }
 
     @Override
@@ -66,8 +98,11 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
     @Override
     public void onBackPressed() {
-
-        this.moveTaskToBack(true);
+        if (this.hadError) {
+            super.onBackPressed();
+        } else {
+            this.moveTaskToBack(true);
+        }
     }
 
     @Override
