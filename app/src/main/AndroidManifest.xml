@@ -23,10 +23,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main2Activity"
+            android:name=".MainPlayerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Main3Activity"></activity>
-
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".FileChooserActivity"></activity>
     </application>
 
 </manifest>

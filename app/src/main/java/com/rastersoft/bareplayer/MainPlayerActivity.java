@@ -21,7 +21,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.lang.Runnable;
 
-public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCompletionListener,Runnable {
+public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener,Runnable {
 
     private MediaPlayer player;
     private AlbumManager albumManager;
@@ -37,7 +37,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main_player);
         Window w = this.getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -46,7 +46,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
         this.player = null;
         this.albumManager = new AlbumManager(this.mode);
 
-        String fullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+        String fullPath = workIntent.getStringExtra("music_path");
         this.albumManager.refreshSongSublist(fullPath);
         this.albumManager.sortAlbumes();
         this.currentAlbum = null;
@@ -74,7 +74,7 @@ public class Main2Activity extends AppCompatActivity implements MediaPlayer.OnCo
 
             AlertDialog.Builder mErr = new AlertDialog.Builder(this);
             mErr.setMessage(String.format(this.getResources().getString(R.string.errorNoMusic),Environment.DIRECTORY_MUSIC,fullPath)).setTitle(R.string.errorNoMusicTitle);
-            mErr.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            mErr.setNegativeButton(R.string.okButton, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
 
                 }

@@ -27,7 +27,7 @@ You can add an empty file/folder called \"random\" or \"random.txt\" to a folder
 
 You can also add an empty file/folder called \"norandom\" or \"norandom.txt\", in which case the music in that album will be played in order when playing in \"random songs\" mode. This is useful for songs that must be player always in order, like the \"Tubular bells\" albumes.\n\n
 
-Music must be stored at: %1$s (or in the folder \"%2$s\" in your external SD Card).</string>
+Music must be stored at %1$s.</string>
 
     <!-- Help button -->
     <string name="errorNoMusicTitle">No music found</string>
@@ -35,4 +35,12 @@ Music must be stored at: %1$s (or in the folder \"%2$s\" in your external SD Car
     <!-- Defines the music storage path -->
     <string name="errorNoMusic">No music found in the device. Please, add music files in the \"%1$s\" of your external SD Card (or in the \"%2$s\" folder).</string>
 
+    <!-- OK text for buttons -->
+    <string name="okButton">Ok</string>
+
+    <!-- Cancel text for buttons -->
+    <string name="cancelButton">Cancel</string>
+
+    <!-- Config text for menu -->
+    <string name="setmusicpath">Set music path</string>
 </resources>
