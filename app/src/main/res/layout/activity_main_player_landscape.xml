@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rastersoft.bareplayer.MainPlayerActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <EditText
+            android:id="@+id/albumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:cursorVisible="false"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="none"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="-23dp" />
+
+        <EditText
+            android:id="@+id/songTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:cursorVisible="false"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="none" />
+
+        <EditText
+            android:id="@+id/Duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonStop"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/ic_action_stop"
+                android:onClick="onStopClicked"
+                android:text="@string/stop_songs" />
+
+            <Button
+                android:id="@+id/buttonPlay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_action_play"
+                android:onClick="onPlayClicked"
+                android:text="@string/play_song" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonPrev"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/ic_action_prev"
+                android:onClick="onPrevSongClicked"
+                android:text="@string/previous_song" />
+
+            <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/ic_action_next"
+                android:onClick="onNextSongClicked"
+                android:text="@string/next_song" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonPrevAlbum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/ic_action_prev_album"
+                android:onClick="onPreviousAlbumClicked"
+                android:text="@string/previous_album" />
+
+            <Button
+                android:id="@+id/buttonNextAlbum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/ic_action_next_album"
+                android:onClick="onNextAlbumClicked"
+                android:text="@string/next_album" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

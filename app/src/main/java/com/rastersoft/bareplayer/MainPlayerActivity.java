@@ -2,6 +2,7 @@ package com.rastersoft.bareplayer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,16 +34,40 @@ public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer
     private Song currentSong;
     private NotificationCompat.Builder notification;
     private AlertDialog dialogo;
-    boolean hadError;
+    private boolean hadError;
+    private int currentOrientation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_player);
+        Intent workIntent = getIntent();
+
+        this.currentOrientation = workIntent.getIntExtra("orientation",ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Log.e("Orientacion2",String.format("%d",this.currentOrientation));
+        switch (this.currentOrientation) {
+            case 1:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                setContentView(R.layout.activity_main_player_landscape);
+                break;
+            case 3:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                setContentView(R.layout.activity_main_player_landscape);
+                break;
+            case 0:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                setContentView(R.layout.activity_main_player);
+                break;
+            case 2:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+                setContentView(R.layout.activity_main_player);
+                break;
+        }
+
+
         Window w = this.getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        Intent workIntent = getIntent();
+
         this.mode = workIntent.getIntExtra("launch_mode", 0); //if it's a string you stored.
         this.player = null;
         this.albumManager = new AlbumManager(this.mode);
