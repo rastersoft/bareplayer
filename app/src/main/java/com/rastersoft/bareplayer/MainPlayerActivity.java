@@ -99,8 +99,8 @@ public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer
             b.setEnabled(false);
 
             AlertDialog.Builder mErr = new AlertDialog.Builder(this);
-            mErr.setMessage(String.format(this.getResources().getString(R.string.errorNoMusic),Environment.DIRECTORY_MUSIC,fullPath)).setTitle(R.string.errorNoMusicTitle);
-            mErr.setNegativeButton(R.string.okButton, new DialogInterface.OnClickListener() {
+            mErr.setMessage(String.format(this.getResources().getString(R.string.errorNoMusic),fullPath)).setTitle(R.string.errorNoMusicTitle);
+            mErr.setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
 
                 }
@@ -172,7 +172,12 @@ public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer
     }
 
     public void onPrevSongClicked(View view) {
-        this.prevSong();
+        int pos = this.player.getCurrentPosition();
+        if (pos < 5000) {
+            this.prevSong();
+        } else {
+            this.player.seekTo(0);
+        }
     }
 
     public void onNextSongClicked(View view) {

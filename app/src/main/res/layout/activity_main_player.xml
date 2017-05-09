@@ -7,12 +7,14 @@
     tools:context="com.rastersoft.bareplayer.MainPlayerActivity">
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:weightSum="1">
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/albumName"
@@ -20,12 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.09"
             android:cursorVisible="false"
-            android:editable="false"
             android:ems="10"
             android:gravity="center_vertical|center_horizontal"
             android:inputType="none"
+            android:maxLines="2"
+            android:minLines="1"
             android:selectAllOnFocus="false"
-            android:singleLine="false"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="-23dp" />
 
@@ -35,7 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.09"
             android:cursorVisible="false"
-            android:editable="false"
             android:ems="10"
             android:gravity="center_vertical|center_horizontal"
             android:inputType="none" />
@@ -45,10 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.09"
-            android:editable="false"
             android:ems="10"
             android:gravity="center_vertical|center_horizontal"
-            android:inputType="textPersonName" />
+            android:inputType="none"
+            android:maxLines="2"
+            android:minLines="1" />
 
         <TableLayout
             android:layout_width="match_parent"

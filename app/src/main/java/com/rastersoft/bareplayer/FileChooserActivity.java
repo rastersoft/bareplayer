@@ -3,9 +3,11 @@ package com.rastersoft.bareplayer;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +37,11 @@ public class FileChooserActivity extends AppCompatActivity implements Comparator
         this.currentPath = workIntent.getStringExtra("music_path");
         this.fillPath();
 
+    }
+
+    public void onSDCardClicked(View view) {
+        this.currentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+        this.fillPath();
     }
 
     public void onOkClicked(View view) {
@@ -121,7 +128,7 @@ public class FileChooserActivity extends AppCompatActivity implements Comparator
                 TextView txt = new TextView(this);
                 txt.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
                 txt.setText(name);
-                txt.setEnabled(false);
+                txt.setInputType(InputType.TYPE_NULL);
                 content.addView(txt);
             }
         }

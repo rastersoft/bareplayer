@@ -33,14 +33,11 @@ Music must be stored at %1$s.</string>
     <string name="errorNoMusicTitle">No music found</string>
 
     <!-- Defines the music storage path -->
-    <string name="errorNoMusic">No music found in the device. Please, add music files in the \"%1$s\" of your external SD Card (or in the \"%2$s\" folder).</string>
-
-    <!-- OK text for buttons -->
-    <string name="okButton">Ok</string>
-
-    <!-- Cancel text for buttons -->
-    <string name="cancelButton">Cancel</string>
+    <string name="errorNoMusic">No music found in the device. Please, add music files in the folder \"%1$s\".</string>
 
     <!-- Config text for menu -->
     <string name="setmusicpath">Set music path</string>
+
+    <!-- Go to the external estorage folder -->
+    <string name="externalStorage">SD Card</string>
 </resources>
