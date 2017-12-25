@@ -23,7 +23,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.lang.Runnable;
 
-public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener,Runnable {
+public class MainPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener, Runnable {
 
     private MediaPlayer player;
     private AlbumManager albumManager;

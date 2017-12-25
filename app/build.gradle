@@ -1,13 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            storeFile file('/home/raster/android_key.jks')
-        }
-    }
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    //buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.rastersoft.bareplayer"
         minSdkVersion 17
