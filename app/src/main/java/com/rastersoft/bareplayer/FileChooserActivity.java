@@ -39,8 +39,18 @@ public class FileChooserActivity extends AppCompatActivity implements Comparator
 
     }
 
-    public void onSDCardClicked(View view) {
+    public void onInternalClicked(View view) {
+        this.currentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        this.fillPath();
+    }
+
+    public void onMusicClicked(View view) {
         this.currentPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath();
+        this.fillPath();
+    }
+
+    public void onRootClicked(View view) {
+        this.currentPath = "/";
         this.fillPath();
     }
 

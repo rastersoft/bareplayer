@@ -39,6 +39,10 @@ La música debe almacenarse en %1$s</string>
     <!-- Config text for menu -->
     <string name="setmusicpath">Directorio de música</string>
 
-    <!-- Go to the external estorage folder -->
-    <string name="externalStorage">Tarjeta SD</string>
+    <!-- Go to the external storage folder -->
+    <string name="root">Raíz</string>
+    <!-- Go to the internal storage folder -->
+    <string name="internalStorage">Interno</string>
+    <!-- Go to the music  folder -->
+    <string name="musicFolder">Música</string>
 </resources>
