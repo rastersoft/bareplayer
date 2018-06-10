@@ -1,3 +1,5 @@
+# BAREPLAYER
+
 BarePlayer is a simple-to-use music player for Android. It allows to play all
 your music randomly, or grouped in albumes.
 
@@ -17,3 +19,10 @@ in which case the music in that album will be played in order when playing in
 order, like the *Tubular bells* albumes.
 
 Music must be stored at the external SD Card.
+
+## Contacting the author
+
+Sergio Costas Rodriguez  
+rastersoft@gmail.com  
+http://www.rastersoft.com  
+https://gitlab.com/rastersoft/bareplayer
